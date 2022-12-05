@@ -1,8 +1,9 @@
 import './App.css'
-import {useState} from 'react'
+import { useState } from 'react'
 
 function App() {
-  
+  const [toDos, setToDos] = useState([])
+  const [toDo, setToDo] = useState('')
   return (
     <div className="app">
       <div className="mainHeading">
@@ -13,19 +14,30 @@ function App() {
         <h2>Whoop, it's Wednesday 🌝 ☕ </h2>
       </div>
       <div className="input">
-        <input type="text" placeholder="🖊️ Add item..." />
-        <i className="fas fa-plus"></i>
+        <input value={toDo} onChange={(e) => setToDo(e.target.value)} type="text" placeholder=" Add item..." />
+        <i onClick={() => setToDos([...toDos, { id: Date.now(), text: toDo, status: false }])} className="fas fa-plus"></i>
       </div>
       <div className="todos">
-        <div className="todo">
-          <div className="left">
-            <input type="checkbox" name="" id="" />
-            <p>Rect tutorial</p>
-          </div>
-          <div className="right">
-            <i className="fas fa-times"></i>
-          </div>
-        </div>
+        {
+          toDos.map((obj) => {
+
+
+            return (
+              <div className="todo">
+                <div className="left">
+                  <input onChange={(e) => { 
+                    console.log(e.target.value); 
+                    console.log(obj);
+                    }} value={obj.status} type="checkbox" name="" id="" />
+                  <p>{obj.text}</p>
+                </div>
+                <div className="right">
+                  <i className="fas fa-times"></i>
+                </div>
+              </div>
+            );
+          })
+        }
       </div>
     </div>
   );
